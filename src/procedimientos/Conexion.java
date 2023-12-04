@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.swing.JOptionPane;
 
 public class Conexion {
@@ -110,30 +109,7 @@ public class Conexion {
 	}
 
 	public static void insertarCliente(String idUsuario, String nombre, String apellidos, String correo, String telefono, String tipoCuenta) {
-        try (Connection connection = obtenerConexion()) {
-            String queryClientes = "INSERT INTO clientes (ID_USUARIO, NOMBRE, APELLIDOS, CORREO, TELEFONO, TIPO_CUENTA) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement statementClientes = connection.prepareStatement(queryClientes);
-                statementClientes.setString(1, idUsuario);
-                statementClientes.setString(2, nombre);
-                statementClientes.setString(3, apellidos);
-                statementClientes.setString(4, correo);
-                statementClientes.setString(5, telefono);
-                statementClientes.setString(6, tipoCuenta);
-                statementClientes.executeUpdate();
-
-            String queryConsolidado = "INSERT INTO consolidado (ID_USUARIO, NOMBRE, APELLIDOS, CORREO, TELEFONO, TIPO_CUENTA) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement statementConsolidado = connection.prepareStatement(queryConsolidado);
-                statementConsolidado.setString(1, idUsuario);
-                statementConsolidado.setString(2, nombre);
-                statementConsolidado.setString(3, apellidos);
-                statementConsolidado.setString(4, correo);
-                statementConsolidado.setString(5, telefono);
-                statementConsolidado.setString(6, tipoCuenta);
-                statementConsolidado.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al insertar cliente en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        
     }
 
 	public static void eliminarCliente(String idUsuario) {
