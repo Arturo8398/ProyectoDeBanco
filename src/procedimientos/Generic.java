@@ -66,3 +66,16 @@ public class Generic<T> {
 	}
 	
 }
+class hola{
+	public static void main(String[] args) {
+		ArrayList<String> arreglo = new ArrayList<>();
+		arreglo.add("hola");
+		arreglo.add("mundo");
+		arreglo.add("como");
+		arreglo.add("estas");
+		arreglo.add("?");
+		
+		Generic<String> generico = new Generic<>(arreglo);
+		generico.recorrerLista();
+	}
+}
