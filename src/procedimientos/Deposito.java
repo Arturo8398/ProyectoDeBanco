@@ -1,4 +1,4 @@
-//Jorge Monroy Peña ICO 27
+//Jorge Monroy Peña 
 package procedimientos;
 
 import javax.swing.*;
