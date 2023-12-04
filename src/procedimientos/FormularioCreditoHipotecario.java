@@ -1,64 +1,94 @@
-
 package procedimientos;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.awt.Font;
+import java.awt.Image;
 
 public class FormularioCreditoHipotecario extends JFrame {
     private JTextField textFieldDireccion;
     private JTextField textFieldValor;
-    private JTextField textID_USUARIO;  
     private JComboBox<String> comboBoxClientes;
-    private JButton btnGuardar;
-    private JButton btnActualizar;
-    private JButton btnEliminar;
-    private JButton btnMostrar;
-    private JButton btnSalir;
+    private RoundButton btnGuardar;
+    private RoundButton btnActualizar;
+    private RoundButton btnEliminar;
+    private RoundButton btnMostrar;
+    private RoundButton btnSalir;
+    private JLabel lblCditoHipotecario;
 
     public FormularioCreditoHipotecario() {
+        getContentPane().setBackground(Color.decode("#D5D2CA"));
         setTitle("Crédito Hipotecario");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 500, 300);
         getContentPane().setLayout(null);
-        
-        JLabel lblID_USUARIO = new JLabel("ID USUARIO:");
-        lblID_USUARIO.setBounds(29, 30, 90, 16);
+        setBackground(Color.decode("#D5D2CA"));
+
+        JLabel lblID_USUARIO = new JLabel("ID Usuario:");
+        lblID_USUARIO.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblID_USUARIO.setBounds(29, 67, 90, 16);
+        lblID_USUARIO.setForeground(Color.decode("#003049"));
         getContentPane().add(lblID_USUARIO);
 
         comboBoxClientes = new JComboBox<>();
-        comboBoxClientes.setBounds(154, 27, 200, 22);
+        comboBoxClientes.setBounds(154, 64, 200, 22);
         cargarClientesEnComboBox();
         getContentPane().add(comboBoxClientes);
-        
-        textID_USUARIO = new JTextField();
-        textID_USUARIO.setBounds(154, 30, 200, 16);
-        getContentPane().add(textID_USUARIO);
+
+        JLabel lblNewLabel = new JLabel("Banco AJEDE");
+        lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblNewLabel.setForeground(Color.decode("#003049"));
+        lblNewLabel.setBounds(49, 23, 89, 13);
+        getContentPane().add(lblNewLabel);
+
+        try {
+            BufferedImage bufferedImage = ImageIO.read(getClass().getResource("/imagenes/logo.png"));
+            Image imagen = bufferedImage.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            ImageIcon iconoRedimensionado = new ImageIcon(imagen);
+            JLabel lblLogo = new JLabel(iconoRedimensionado);
+            lblLogo.setBounds(10, 10, 43, 37);
+            getContentPane().add(lblLogo);
+            getContentPane().add(lblLogo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         JLabel lblDireccion = new JLabel("Dirección Hipoteca:");
-        lblDireccion.setBounds(21, 70, 123, 16);
+        lblDireccion.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblDireccion.setBounds(29, 98, 123, 16);
+        lblDireccion.setForeground(Color.decode("#003049"));
         getContentPane().add(lblDireccion);
 
         textFieldDireccion = new JTextField();
-        textFieldDireccion.setBounds(154, 67, 200, 22);
+        textFieldDireccion.setBounds(154, 96, 200, 22);
         getContentPane().add(textFieldDireccion);
         textFieldDireccion.setColumns(10);
 
         JLabel lblValor = new JLabel("Valor:");
-        lblValor.setBounds(29, 110, 61, 16);
+        lblValor.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblValor.setBounds(29, 130, 61, 16);
+        lblValor.setForeground(Color.decode("#003049"));
         getContentPane().add(lblValor);
 
         textFieldValor = new JTextField();
-        textFieldValor.setBounds(154, 107, 200, 22);
+        textFieldValor.setBounds(154, 128, 200, 22);
         getContentPane().add(textFieldValor);
         textFieldValor.setColumns(10);
 
-        btnGuardar = new JButton("Guardar");
+        btnGuardar = new RoundButton("Guardar");
         btnGuardar.setBounds(29, 160, 97, 25);
+        btnGuardar.setForeground(Color.decode("#003049"));
+
         btnGuardar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 guardarCreditoHipotecario();
@@ -66,8 +96,9 @@ public class FormularioCreditoHipotecario extends JFrame {
         });
         getContentPane().add(btnGuardar);
 
-        btnActualizar = new JButton("Actualizar");
+        btnActualizar = new RoundButton("Actualizar");
         btnActualizar.setBounds(136, 160, 97, 25);
+        btnActualizar.setForeground(Color.decode("#003049"));
         btnActualizar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 actualizarCreditoHipotecario();
@@ -75,8 +106,9 @@ public class FormularioCreditoHipotecario extends JFrame {
         });
         getContentPane().add(btnActualizar);
 
-        btnEliminar = new JButton("Eliminar");
+        btnEliminar = new RoundButton("Eliminar");
         btnEliminar.setBounds(243, 160, 97, 25);
+        btnEliminar.setForeground(Color.decode("#003049"));
         btnEliminar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 eliminarCreditoHipotecario();
@@ -84,8 +116,9 @@ public class FormularioCreditoHipotecario extends JFrame {
         });
         getContentPane().add(btnEliminar);
 
-        btnMostrar = new JButton("Mostrar");
+        btnMostrar = new RoundButton("Mostrar");
         btnMostrar.setBounds(350, 160, 97, 25);
+        btnMostrar.setForeground(Color.decode("#003049"));
         btnMostrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mostrarCreditosHipotecarios();
@@ -93,21 +126,31 @@ public class FormularioCreditoHipotecario extends JFrame {
         });
         getContentPane().add(btnMostrar);
 
-        btnSalir = new JButton("Salir");
+        ImageIcon icono = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+        setIconImage(icono.getImage());
+
+        btnSalir = new RoundButton("Salir");
         btnSalir.setBounds(377, 225, 97, 25);
+        btnSalir.setForeground(Color.decode("#003049"));
         btnSalir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 salir();
             }
         });
         getContentPane().add(btnSalir);
+
+        lblCditoHipotecario = new JLabel("Cédito Hipotecario");
+        lblCditoHipotecario.setForeground(new Color(0, 48, 73));
+        lblCditoHipotecario.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 20));
+        lblCditoHipotecario.setBounds(154, 7, 205, 47);
+        getContentPane().add(lblCditoHipotecario);
     }
 
     private void cargarClientesEnComboBox() {
-        String consulta = "SELECT ID_USUARIO FROM clientes";
+        String consulta = "SELECT ID_USUARIO FROM clientes WHERE tipo_cuenta = 'Hipotecario'";
         try (Connection conexion = Conexion.obtenerConexion();
-             PreparedStatement pstmt = conexion.prepareStatement(consulta);
-             ResultSet resultSet = pstmt.executeQuery()) {
+                PreparedStatement pstmt = conexion.prepareStatement(consulta);
+                ResultSet resultSet = pstmt.executeQuery()) {
             while (resultSet.next()) {
                 comboBoxClientes.addItem(resultSet.getString("ID_USUARIO"));
             }
@@ -117,123 +160,49 @@ public class FormularioCreditoHipotecario extends JFrame {
         }
     }
 
- // ... (código previo)
-
     private void guardarCreditoHipotecario() {
+        String idUsuario = comboBoxClientes.getSelectedItem().toString();
+        String direccion = textFieldDireccion.getText();
+        double valor = Double.parseDouble(textFieldValor.getText());
+
+        DAOCreditoHipotecario ch = new DAOCreditoHipotecario();
+        CreditoHipotecario chipo = new CreditoHipotecario(idUsuario, direccion, String.valueOf(valor));
         try {
-            String idUsuario = comboBoxClientes.getSelectedItem().toString();
-            String direccion = textFieldDireccion.getText();
-            double valor = Double.parseDouble(textFieldValor.getText());
-
-            if (Conexion.existeCliente(idUsuario) && esCuentaHipotecaria(idUsuario)) {
-                String consulta = "INSERT INTO credito_hipotecario (id_usuario, direccion, valor) VALUES (?, ?, ?)";
-                try (Connection conexion = Conexion.obtenerConexion();
-                     PreparedStatement pstmt = conexion.prepareStatement(consulta)) {
-                    pstmt.setString(1, idUsuario);
-                    pstmt.setString(2, direccion);
-                    pstmt.setDouble(3, valor);
-
-                    pstmt.executeUpdate();
-                }
-                JOptionPane.showMessageDialog(this, "Crédito Hipotecario guardado exitosamente.");
-                limpiarCampos();
-            } else {
-                JOptionPane.showMessageDialog(this, "Cliente no encontrado o no es una cuenta hipotecario", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese un valor válido para el Valor de la Hipoteca.", "Error", JOptionPane.ERROR_MESSAGE);
+            ch.create(chipo);
         } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al guardar el crédito hipotecario.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al guardar el crédito hipotecario");
         }
     }
-
-
-    private boolean esCuentaHipotecaria(String idUsuario) {
-        try {
-            String consulta = "SELECT tipo_cuenta FROM clientes WHERE ID_USUARIO = ?";
-            try (Connection conexion = Conexion.obtenerConexion();
-                 PreparedStatement pstmt = conexion.prepareStatement(consulta)) {
-                pstmt.setString(1, idUsuario);
-                try (ResultSet resultSet = pstmt.executeQuery()) {
-                    if (resultSet.next()) {
-                        String tipoCuenta = resultSet.getString("tipo_cuenta");
-                        return "Hipotecario".equals(tipoCuenta);
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // ... (resto del código)
-
 
     private void actualizarCreditoHipotecario() {
+        String idUsuario = comboBoxClientes.getSelectedItem().toString();
+        String direccion = textFieldDireccion.getText();
+        double valor = Double.parseDouble(textFieldValor.getText());
+
+        DAOCreditoHipotecario ch = new DAOCreditoHipotecario();
+        CreditoHipotecario chipo = new CreditoHipotecario(idUsuario, direccion, String.valueOf(valor));
         try {
-        	
-        	String idUsuario = comboBoxClientes.getSelectedItem().toString();
-             String direccion = textFieldDireccion.getText();
-             double valor = Double.parseDouble(textFieldValor.getText());
-
-             String consulta = "UPDATE credito_hipotecario SET direccion = ?, valor = ? WHERE id_usuario = ?";
-             try (Connection conexion = Conexion.obtenerConexion();
-                  PreparedStatement pstmt = conexion.prepareStatement(consulta)) {
-                 pstmt.setString(1, direccion);
-                 pstmt.setDouble(2, valor);
-                 pstmt.setString(3, idUsuario);
-
-                int filasAfectadas = pstmt.executeUpdate();
-                if (filasAfectadas > 0) {
-                    JOptionPane.showMessageDialog(this, "Crédito Hipotecario actualizado exitosamente.");
-                    limpiarCampos();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Crédito no encontrado para el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese valores válidos para ID, Dirección y Valor de la Hipoteca.", "Error", JOptionPane.ERROR_MESSAGE);
+            ch.update(chipo);
         } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al actualizar el crédito hipotecario.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al actualizar el crédito hipotecario");
         }
     }
 
     private void eliminarCreditoHipotecario() {
+        String idUsuario = comboBoxClientes.getSelectedItem().toString();
+        DAOCreditoHipotecario el = new DAOCreditoHipotecario();
         try {
-        	String idUsuario = comboBoxClientes.getSelectedItem().toString();
-
-            String consulta = "DELETE FROM credito_hipotecario WHERE id_usuario = ?";
-            try (Connection conexion = Conexion.obtenerConexion();
-                 PreparedStatement pstmt = conexion.prepareStatement(consulta)) {
-                pstmt.setString(1, idUsuario);
-
-                int filasAfectadas = pstmt.executeUpdate();
-                if (filasAfectadas > 0) {
-                    JOptionPane.showMessageDialog(this, "Crédito Hipotecario eliminado exitosamente.");
-                    limpiarCampos();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Crédito no encontrado para el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese un valor válido para ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            el.delete(idUsuario);
         } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al eliminar el crédito hipotecario.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al eliminar el crédito hipotecario");
         }
     }
-
 
     private void mostrarCreditosHipotecarios() {
         String consulta = "SELECT * FROM credito_hipotecario";
         try (Connection conexion = Conexion.obtenerConexion();
-             PreparedStatement pstmt = conexion.prepareStatement(consulta);
-             ResultSet resultSet = pstmt.executeQuery()) {
+                PreparedStatement pstmt = conexion.prepareStatement(consulta);
+                ResultSet resultSet = pstmt.executeQuery()) {
             StringBuilder mensaje = new StringBuilder("Lista de Créditos Hipotecarios:\n");
 
             while (resultSet.next()) {
@@ -248,7 +217,8 @@ public class FormularioCreditoHipotecario extends JFrame {
             JOptionPane.showMessageDialog(this, mensaje.toString());
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al mostrar los créditos hipotecarios.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al mostrar los créditos hipotecarios.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
