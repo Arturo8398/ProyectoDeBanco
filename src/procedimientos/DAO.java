@@ -1,3 +1,4 @@
+//Creado por Arturo García López
 package procedimientos;
 
 import java.sql.SQLException;
