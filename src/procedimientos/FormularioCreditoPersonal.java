@@ -1,8 +1,15 @@
 package procedimientos;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,34 +19,58 @@ public class FormularioCreditoPersonal extends JFrame {
 
     private JComboBox<String> comboBoxClientes;
     private JTextField textFieldIngresos;
-    private JButton btnGuardar;
-    private JButton btnActualizar;
-    private JButton btnEliminar;
-    private JButton btnMostrar;
-    private JButton btnSalir;
+    private RoundButton btnGuardar;
+    private RoundButton btnActualizar;
+    private RoundButton btnEliminar;
+    private RoundButton btnMostrar;
+    private RoundButton btnSalir;
+    private JLabel lblCditoPersonal;
 
     public FormularioCreditoPersonal() {
+        getContentPane().setBackground(Color.decode("#D5D2CA"));
         setTitle("Credito Personal");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 500, 300);
+        setBounds(100, 100, 530, 319);
         getContentPane().setLayout(null);
+        setBackground(Color.decode("#D5D2CA"));
 
         comboBoxClientes = new JComboBox<>();
-        comboBoxClientes.setBounds(129, 27, 200, 22);
+        comboBoxClientes.setBounds(156, 67, 204, 22);
         cargarClientesEnComboBox();
         getContentPane().add(comboBoxClientes);
 
         JLabel lblIngresos = new JLabel("Ingresos:");
-        lblIngresos.setBounds(29, 70, 61, 16);
+        lblIngresos.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblIngresos.setBounds(37, 102, 61, 16);
+        lblIngresos.setForeground(Color.decode("#003049"));
         getContentPane().add(lblIngresos);
 
+        JLabel lblNewLabel = new JLabel("Banco AJEDE");
+        lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblNewLabel.setForeground(Color.decode("#003049"));
+        lblNewLabel.setBounds(49, 23, 89, 13);
+        getContentPane().add(lblNewLabel);
+
+        try {
+            BufferedImage bufferedImage = ImageIO.read(getClass().getResource("/imagenes/logo.png"));
+            Image imagen = bufferedImage.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            ImageIcon iconoRedimensionado = new ImageIcon(imagen);
+            JLabel lblLogo = new JLabel(iconoRedimensionado);
+            lblLogo.setBounds(10, 10, 43, 37);
+            getContentPane().add(lblLogo);
+            getContentPane().add(lblLogo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         textFieldIngresos = new JTextField();
-        textFieldIngresos.setBounds(129, 67, 200, 22);
+        textFieldIngresos.setBounds(156, 100, 204, 22);
         getContentPane().add(textFieldIngresos);
         textFieldIngresos.setColumns(10);
 
-        btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(29, 120, 97, 25);
+        btnGuardar = new RoundButton("Guardar");
+        btnGuardar.setForeground(Color.decode("#003049"));
+        btnGuardar.setBounds(49, 164, 97, 25);
         btnGuardar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 guardarCredito();
@@ -47,8 +78,9 @@ public class FormularioCreditoPersonal extends JFrame {
         });
         getContentPane().add(btnGuardar);
 
-        btnActualizar = new JButton("Actualizar");
-        btnActualizar.setBounds(136, 120, 97, 25);
+        btnActualizar = new RoundButton("Actualizar");
+        btnActualizar.setForeground(Color.decode("#003049"));
+        btnActualizar.setBounds(156, 164, 97, 25);
         btnActualizar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 actualizarCredito();
@@ -56,8 +88,9 @@ public class FormularioCreditoPersonal extends JFrame {
         });
         getContentPane().add(btnActualizar);
 
-        btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBounds(243, 120, 97, 25);
+        btnEliminar = new RoundButton("Eliminar");
+        btnEliminar.setBounds(263, 164, 97, 25);
+        btnEliminar.setForeground(Color.decode("#003049"));
         btnEliminar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 eliminarCredito();
@@ -65,8 +98,9 @@ public class FormularioCreditoPersonal extends JFrame {
         });
         getContentPane().add(btnEliminar);
 
-        btnMostrar = new JButton("Mostrar");
-        btnMostrar.setBounds(350, 120, 97, 25);
+        btnMostrar = new RoundButton("Mostrar");
+        btnMostrar.setBounds(370, 164, 97, 25);
+        btnMostrar.setForeground(Color.decode("#003049"));
         btnMostrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mostrarCreditos();
@@ -74,25 +108,37 @@ public class FormularioCreditoPersonal extends JFrame {
         });
         getContentPane().add(btnMostrar);
 
-        btnSalir = new JButton("Salir");
-        btnSalir.setBounds(377, 225, 97, 25);
+        btnSalir = new RoundButton("Salir");
+        btnSalir.setBounds(409, 247, 97, 25);
+        btnSalir.setForeground(Color.decode("#003049"));
         btnSalir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 salir();
             }
         });
         getContentPane().add(btnSalir);
-        
-        JLabel lblID_USUARIO = new JLabel("ID USUARIO:");
-        lblID_USUARIO.setBounds(29, 30, 90, 16);
+
+        ImageIcon icono = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+        setIconImage(icono.getImage());
+
+        JLabel lblID_USUARIO = new JLabel("ID Usuario:");
+        lblID_USUARIO.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblID_USUARIO.setBounds(37, 70, 90, 16);
+        lblID_USUARIO.setForeground(Color.decode("#003049"));
         getContentPane().add(lblID_USUARIO);
+
+        lblCditoPersonal = new JLabel("Cédito Personal");
+        lblCditoPersonal.setForeground(Color.decode("#003049"));
+        lblCditoPersonal.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 20));
+        lblCditoPersonal.setBounds(170, 10, 175, 47);
+        getContentPane().add(lblCditoPersonal);
     }
 
     private void cargarClientesEnComboBox() {
-        String consulta = "SELECT ID_USUARIO FROM clientes";
+        String consulta = "SELECT ID_USUARIO FROM clientes WHERE tipo_cuenta = 'Personal'";
         try (Connection conexion = Conexion.obtenerConexion();
-             PreparedStatement pstmt = conexion.prepareStatement(consulta);
-             ResultSet resultSet = pstmt.executeQuery()) {
+                PreparedStatement pstmt = conexion.prepareStatement(consulta);
+                ResultSet resultSet = pstmt.executeQuery()) {
             while (resultSet.next()) {
                 comboBoxClientes.addItem(resultSet.getString("ID_USUARIO"));
             }
@@ -113,10 +159,12 @@ public class FormularioCreditoPersonal extends JFrame {
                 JOptionPane.showMessageDialog(this, "Crédito Personal guardado exitosamente.");
                 limpiarCampos();
             } else {
-                JOptionPane.showMessageDialog(this, "No se puede guardar el crédito para cuentas no personales.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No se puede guardar el crédito para cuentas no personales.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese valores válidos para Ingresos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ingrese valores válidos para Ingresos.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -135,7 +183,8 @@ public class FormularioCreditoPersonal extends JFrame {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al obtener el tipo de cuenta.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al obtener el tipo de cuenta.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         } finally {
             if (conexion != null) {
                 try {
@@ -162,7 +211,8 @@ public class FormularioCreditoPersonal extends JFrame {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al insertar el crédito personal.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al insertar el crédito personal.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         } finally {
             if (conexion != null) {
                 try {
@@ -193,12 +243,14 @@ public class FormularioCreditoPersonal extends JFrame {
                         JOptionPane.showMessageDialog(this, "Crédito Personal actualizado exitosamente.");
                         limpiarCampos();
                     } else {
-                        JOptionPane.showMessageDialog(this, "Credito no encontrado para el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Credito no encontrado para el ID proporcionado.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error al actualizar el crédito personal.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al actualizar el crédito personal.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
             } finally {
                 if (conexion != null) {
                     try {
@@ -209,7 +261,8 @@ public class FormularioCreditoPersonal extends JFrame {
                 }
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese valores válidos para Ingresos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ingrese valores válidos para Ingresos.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -230,12 +283,14 @@ public class FormularioCreditoPersonal extends JFrame {
                         JOptionPane.showMessageDialog(this, "Crédito Personal eliminado exitosamente.");
                         limpiarCampos();
                     } else {
-                        JOptionPane.showMessageDialog(this, "Credito no encontrado para el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Credito no encontrado para el ID proporcionado.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error al eliminar el crédito personal.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al eliminar el crédito personal.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
             } finally {
                 if (conexion != null) {
                     try {
@@ -246,7 +301,8 @@ public class FormularioCreditoPersonal extends JFrame {
                 }
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese valores válidos para Ingresos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ingrese valores válidos para Ingresos.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -265,14 +321,16 @@ public class FormularioCreditoPersonal extends JFrame {
                     String idUsuario = resultSet.getString("id_usuario");
                     double ingresos = resultSet.getDouble("ingresos");
 
-                    mensaje.append("ID USUARIO: ").append(idUsuario).append(", Ingresos: ").append(ingresos).append("\n");
+                    mensaje.append("ID USUARIO: ").append(idUsuario).append(", Ingresos: ").append(ingresos)
+                            .append("\n");
                 }
 
                 JOptionPane.showMessageDialog(this, mensaje.toString());
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al mostrar los créditos personales.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al mostrar los créditos personales.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         } finally {
             if (conexion != null) {
                 try {
