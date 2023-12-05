@@ -1,0 +1,5 @@
+1|Edgar|Rodriguez Rodriguez|Edgar123@gmail.com|562652767|Personal|
+3|Arturo|Garcia Lopez|ArturoGAR@gmail.com|712349831|Personal|
+5|Evelin|Cruz Lopez|Evelin123@gmail.com|556476891|Hipotecario|
+6|Fernando|Garcia Lopez|Fer123@gmail.com|1235487398|Hipotecario|
+4|Jorge|Monroy Pena|Jorge123@gmail.com|712657894|Hipotecario|
