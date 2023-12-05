@@ -1,81 +1,124 @@
 package procedimientos;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 public class Menu extends JFrame {
     public Menu() {
         setTitle("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1000, 600);
+        setBounds(100, 100, 533, 410);
         getContentPane().setLayout(null);
-        getContentPane().setBackground(new Color(188, 143, 143));
+        getContentPane().setBackground(Color.decode("#D5D2CA"));
 
-        JLabel titleLabel = new JLabel("Menu");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 37));
-        titleLabel.setForeground(new Color(0, 0, 0));
+        JLabel titleLabel = new JLabel("Menú");
+        titleLabel.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 37));
+        titleLabel.setForeground(Color.decode("#003049"));
         Dimension titleSize = titleLabel.getPreferredSize();
 
         int titleX = (getWidth() - titleSize.width) / 2;
         int titleY = 50;
-        titleLabel.setBounds(titleX, titleY, titleSize.width, titleSize.height);
+        titleLabel.setBounds(207, 59, 125, 43);
         getContentPane().add(titleLabel);
 
-        JButton btnNuevoCliente = new JButton("Nuevo Cliente");
+        RoundButton btnNuevoCliente = new RoundButton("Nuevo Cliente");
+        btnNuevoCliente.setForeground(Color.decode("#003049"));
+        btnNuevoCliente.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
         btnNuevoCliente.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 abrirNuevoCliente();
             }
         });
-        btnNuevoCliente.setBounds(426, 142, 159, 23);
+        btnNuevoCliente.setBounds(178, 112, 159, 23);
         getContentPane().add(btnNuevoCliente);
 
-        JButton btnCredito = new JButton("Crédito");
+        RoundButton btnCredito = new RoundButton("Crédito");
+        btnCredito.setForeground(Color.decode("#003049"));
+        btnCredito.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
         btnCredito.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 abrirCredito();
             }
         });
-        btnCredito.setBounds(426, 212, 159, 23);
+        btnCredito.setBounds(178, 145, 159, 23);
         getContentPane().add(btnCredito);
 
-        JButton btnConsultaFondos = new JButton("Consulta de Fondos");
+        RoundButton btnConsultaFondos = new RoundButton("Consulta de Fondos");
+        btnConsultaFondos.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        btnConsultaFondos.setForeground(Color.decode("#003049"));
         btnConsultaFondos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 abrirConsultaFondos();
             }
         });
-        btnConsultaFondos.setBounds(426, 283, 159, 23);
+        btnConsultaFondos.setBounds(178, 178, 159, 23);
         getContentPane().add(btnConsultaFondos);
 
-        JButton btnRetiros = new JButton("Retiros");
+        RoundButton btnRetiros = new RoundButton("Retiros");
+        btnRetiros.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        btnRetiros.setForeground(Color.decode("#003049"));
         btnRetiros.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 abrirRetiros();
             }
         });
-        btnRetiros.setBounds(426, 351, 159, 23);
+        btnRetiros.setBounds(178, 211, 159, 23);
         getContentPane().add(btnRetiros);
 
-        JButton btnDeposito = new JButton("Depósito");
+        RoundButton btnDeposito = new RoundButton("Depósito");
+        btnDeposito.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        btnDeposito.setForeground(Color.decode("#003049"));
         btnDeposito.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 abrirDeposito();
             }
         });
-        btnDeposito.setBounds(426, 421, 159, 23);
+        btnDeposito.setBounds(178, 244, 159, 23);
         getContentPane().add(btnDeposito);
 
-        JButton btnSalir = new JButton("Salir");
-        btnSalir.setBounds(805, 500, 89, 23);
+        RoundButton btnSalir = new RoundButton("Salir");
+        btnSalir.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        btnSalir.setBounds(420, 340, 89, 23);
+        btnSalir.setForeground(Color.decode("#003049"));
         btnSalir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
         getContentPane().add(btnSalir);
+        
+        JLabel lblNewLabel = new JLabel("Banco AJEDE");
+        lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblNewLabel.setForeground(Color.decode("#003049"));
+        lblNewLabel.setBounds(49, 23, 89, 13);
+        getContentPane().add(lblNewLabel);
+        
+        ImageIcon icono = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+        setIconImage(icono.getImage());
+        
+        try {
+            BufferedImage bufferedImage = ImageIO.read(getClass().getResource("/imagenes/logo.png"));
+            Image imagen = bufferedImage.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            ImageIcon iconoRedimensionado = new ImageIcon(imagen);
+            JLabel lblLogo = new JLabel(iconoRedimensionado);
+            lblLogo.setBounds(10, 10, 43, 37);
+            getContentPane().add(lblLogo);
+            getContentPane().add(lblLogo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void abrirNuevoCliente() {
