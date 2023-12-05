@@ -1,46 +1,81 @@
-//Jorge Monroy Peña 
 package procedimientos;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.awt.Font;
+import java.awt.Image;
 
 public class Deposito extends JFrame {
 
-    private JComboBox<String> comboBoxClientes;
+    private JComboBox <String> comboBoxClientes;
     private JTextField txtMontoDeposito;
-    private JButton btnDepositar;
-    private JButton btnSalir;
+    private RoundButton btnDepositar;
+    private RoundButton btnSalir;
 
     public Deposito() {
         setTitle("Depósito");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 356, 200);
+        setBounds(100, 100, 461, 277);
         getContentPane().setLayout(null);
-
-        JLabel lblID_USUARIO = new JLabel("ID USUARIO:");
-        lblID_USUARIO.setBounds(20, 30, 90, 16);
+        setBackground(Color.decode("#D5D2CA"));
+        getContentPane().setBackground(Color.decode("#D5D2CA"));
+        
+        JLabel lblID_USUARIO = new JLabel("ID Usuario:");
+        lblID_USUARIO.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblID_USUARIO.setBounds(20, 95, 90, 16);
+        lblID_USUARIO.setForeground(Color.decode("#003049"));
         getContentPane().add(lblID_USUARIO);
 
         comboBoxClientes = new JComboBox<>();
-        comboBoxClientes.setBounds(120, 27, 150, 22);
+        comboBoxClientes.setBounds(137, 92, 170, 22);
         cargarClientesEnComboBox();
         getContentPane().add(comboBoxClientes);
 
         JLabel lblMontoDeposito = new JLabel("Monto de Depósito:");
-        lblMontoDeposito.setBounds(20, 60, 120, 16);
+        lblMontoDeposito.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblMontoDeposito.setBounds(20, 126, 120, 16);
+        lblMontoDeposito.setForeground(Color.decode("#003049"));
         getContentPane().add(lblMontoDeposito);
 
         txtMontoDeposito = new JTextField();
-        txtMontoDeposito.setBounds(150, 57, 170, 22);
+        txtMontoDeposito.setBounds(137, 124, 170, 22);
         getContentPane().add(txtMontoDeposito);
+        
+        ImageIcon icono = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+        setIconImage(icono.getImage());
+        
+        JLabel lblNewLabel = new JLabel("Banco AJEDE");
+        lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblNewLabel.setForeground(Color.decode("#003049"));
+        lblNewLabel.setBounds(49, 23, 89, 13);
+        getContentPane().add(lblNewLabel);
+        
+        try {
+            BufferedImage bufferedImage = ImageIO.read(getClass().getResource("/imagenes/logo.png"));
+            Image imagen = bufferedImage.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            ImageIcon iconoRedimensionado = new ImageIcon(imagen);
+            JLabel lblLogo = new JLabel(iconoRedimensionado);
+            lblLogo.setBounds(10, 10, 43, 37);
+            getContentPane().add(lblLogo);
+            getContentPane().add(lblLogo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        btnDepositar = new JButton("Realizar Depósito");
-        btnDepositar.setBounds(20, 101, 150, 25);
+        btnDepositar = new RoundButton("Realizar Depósito");
+        btnDepositar.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        btnDepositar.setBounds(150, 156, 150, 25);
+        btnDepositar.setForeground(Color.decode("#003049"));
         btnDepositar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 realizarDeposito();
@@ -49,14 +84,22 @@ public class Deposito extends JFrame {
         getContentPane().add(btnDepositar);
         
 
-        btnSalir = new JButton("Salir");
-        btnSalir.setBounds(200, 101, 100, 25);
+        btnSalir = new RoundButton("Salir");
+        btnSalir.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        btnSalir.setBounds(337, 205, 100, 25);
+        btnSalir.setForeground(Color.decode("#003049"));
         btnSalir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 salir();
             }
         });
         getContentPane().add(btnSalir);
+        
+        lblHacerDepsito = new JLabel("Hacer Depósito");
+        lblHacerDepsito.setForeground(new Color(0, 48, 73));
+        lblHacerDepsito.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 20));
+        lblHacerDepsito.setBounds(137, 22, 175, 47);
+        getContentPane().add(lblHacerDepsito);
     }
 
     private void cargarClientesEnComboBox() {
@@ -111,7 +154,7 @@ public class Deposito extends JFrame {
 
     private void realizarDepositoPersonal(String idUsuario, double montoDeposito) throws SQLException {
 
-        String updateQuery = "UPDATE Banco.credito_personal SET ingresos = ingresos + ? WHERE id_usuario = ?";
+        String updateQuery = "UPDATE credito_personal SET ingresos = ingresos + ? WHERE id_usuario = ?";
         try (Connection conexion = Conexion.obtenerConexion();
              PreparedStatement pstmt = conexion.prepareStatement(updateQuery)) {
             pstmt.setDouble(1, montoDeposito);
@@ -124,6 +167,7 @@ public class Deposito extends JFrame {
             realizarDeposito();
         }
     };
+    private JLabel lblHacerDepsito;
 
     private void salir() {
         dispose();

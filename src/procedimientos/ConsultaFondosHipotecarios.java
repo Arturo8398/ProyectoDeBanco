@@ -1,8 +1,15 @@
 package procedimientos;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,27 +17,53 @@ import java.sql.SQLException;
 
 public class ConsultaFondosHipotecarios extends JFrame {
     private JComboBox<String> comboBoxClientes;
-    private JButton btnConsultar;
-    private JButton btnSalir;
+    private RoundButton btnConsultar;
+    private RoundButton btnSalir;
     private JLabel lblResultado;
+    private JLabel lblFondoHipotecario;
 
     public ConsultaFondosHipotecarios() {
         setTitle("Consulta Fondos Hipotecario");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 356, 200);
+        setBounds(100, 100, 461, 277);
         getContentPane().setLayout(null);
+        getContentPane().setBackground(Color.decode("#D5D2CA"));
 
-        JLabel lblID_USUARIO = new JLabel("ID USUARIO:");
-        lblID_USUARIO.setBounds(20, 30, 90, 16);
+        JLabel lblID_USUARIO = new JLabel("ID Usuario:");
+        lblID_USUARIO.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblID_USUARIO.setBounds(20, 101, 90, 16);
+        lblID_USUARIO.setForeground(Color.decode("#003049"));
         getContentPane().add(lblID_USUARIO);
+        
+        JLabel lblNewLabel = new JLabel("Banco AJEDE");
+        lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblNewLabel.setForeground(Color.decode("#003049"));
+        lblNewLabel.setBounds(49, 23, 89, 13);
+        getContentPane().add(lblNewLabel);
+        
+        try {
+            BufferedImage bufferedImage = ImageIO.read(getClass().getResource("/imagenes/logo.png"));
+            Image imagen = bufferedImage.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            ImageIcon iconoRedimensionado = new ImageIcon(imagen);
+            JLabel lblLogo = new JLabel(iconoRedimensionado);
+            lblLogo.setBounds(10, 10, 43, 37);
+            getContentPane().add(lblLogo);
+            getContentPane().add(lblLogo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         comboBoxClientes = new JComboBox<>();
-        comboBoxClientes.setBounds(120, 27, 200, 22);
+        comboBoxClientes.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        comboBoxClientes.setBounds(135, 98, 200, 22);
+        comboBoxClientes.setForeground(Color.decode("#003049"));
         cargarClientesEnComboBox();
         getContentPane().add(comboBoxClientes);
 
-        btnConsultar = new JButton("Consultar Fondos");
-        btnConsultar.setBounds(20, 101, 150, 25);
+        btnConsultar = new RoundButton("Consultar Fondos");
+        btnConsultar.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        btnConsultar.setBounds(164, 130, 150, 25);
+        btnConsultar.setForeground(Color.decode("#003049"));
         btnConsultar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 consultarFondosHipotecario();
@@ -38,8 +71,10 @@ public class ConsultaFondosHipotecarios extends JFrame {
         });
         getContentPane().add(btnConsultar);
 
-        btnSalir = new JButton("Salir");
-        btnSalir.setBounds(200, 101, 100, 25);
+        btnSalir = new RoundButton("Salir");
+        btnSalir.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        btnSalir.setBounds(337, 205, 100, 25);
+        btnSalir.setForeground(Color.decode("#003049"));
         btnSalir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 salir();
@@ -49,11 +84,18 @@ public class ConsultaFondosHipotecarios extends JFrame {
 
         lblResultado = new JLabel("");
         lblResultado.setBounds(20, 130, 400, 16);
+        lblResultado.setForeground(Color.decode("#003049"));
         getContentPane().add(lblResultado);
+        
+        lblFondoHipotecario = new JLabel("Fondo Hipotecario");
+        lblFondoHipotecario.setForeground(new Color(0, 48, 73));
+        lblFondoHipotecario.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 20));
+        lblFondoHipotecario.setBounds(135, 41, 205, 47);
+        getContentPane().add(lblFondoHipotecario);
     }
 
     private void cargarClientesEnComboBox() {
-        String consulta = "SELECT ID_USUARIO FROM clientes";
+        String consulta = "SELECT ID_USUARIO FROM clientes WHERE tipo_cuenta = 'Hipotecario'";
         try (Connection conexion = Conexion.obtenerConexion();
              PreparedStatement pstmt = conexion.prepareStatement(consulta);
              ResultSet resultSet = pstmt.executeQuery()) {

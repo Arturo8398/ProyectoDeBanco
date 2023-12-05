@@ -1,78 +1,108 @@
 package procedimientos;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 import javax.swing.SwingUtilities;
 
 public class ConsultaFondos extends JFrame {
-    private JLabel titleLabel;
+	private JLabel titleLabel;
 
-    public ConsultaFondos() {
-        setTitle("Consulta de Fondos");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1000, 600);
-        getContentPane().setLayout(null);
-        getContentPane().setBackground(new Color(188, 143, 143));
-        setResizable(false);
+	public ConsultaFondos() {
+		setTitle("Consulta de Fondos");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 642, 325);
+		getContentPane().setLayout(null);
+		getContentPane().setBackground(Color.decode("#D5D2CA"));
+		setResizable(false);
+
+		titleLabel = new JLabel("Consulta de Fondos");
+		titleLabel.setBounds(109, 38, 427, 64);
+		getContentPane().add(titleLabel);
+		titleLabel.setForeground(Color.decode("#003049"));
+		titleLabel.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 40));
+
+		RoundButton btnConsultarFondosHipotecarios = new RoundButton("Consultar Fondos Hipotecarios");
+		btnConsultarFondosHipotecarios.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+		btnConsultarFondosHipotecarios.setBounds(208, 145, 216, 23);
+		btnConsultarFondosHipotecarios.setForeground(Color.decode("#003049"));
+		getContentPane().add(btnConsultarFondosHipotecarios);
+		
+		JLabel lblNewLabel = new JLabel("Banco AJEDE");
+        lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblNewLabel.setForeground(Color.decode("#003049"));
+        lblNewLabel.setBounds(49, 23, 89, 13);
+        getContentPane().add(lblNewLabel);
         
-                titleLabel = new JLabel("Consulta de Fondos");
-                titleLabel.setBounds(193, 80, 616, 78);
-                getContentPane().add(titleLabel);
-                titleLabel.setForeground(Color.BLACK);
-                titleLabel.setFont(new Font("Times New Roman", Font.BOLD, 67));
-                
-                        JButton btnConsultarFondosHipotecarios = 	new JButton("Consultar Fondos Hipotecarios");
-                        btnConsultarFondosHipotecarios.setBounds(380, 304, 183, 23);
-                        getContentPane().add(btnConsultarFondosHipotecarios);
-                        
-                                JButton btnConsultarFondosPersonales = new JButton("Consultar Fondos Personales");
-                                btnConsultarFondosPersonales.setBounds(380, 231, 183, 23);
-                                getContentPane().add(btnConsultarFondosPersonales);
-                                
-                                        JButton btnSalir = new JButton("Salir");
-                                        btnSalir.setBounds(844, 491, 89, 23);
-                                        getContentPane().add(btnSalir);
-                                        btnSalir.addActionListener(new ActionListener() {
-                                            public void actionPerformed(ActionEvent e) {
-                                                dispose();
-                                            }
-                                        });
-                                btnConsultarFondosPersonales.addActionListener(new ActionListener() {
-                                    public void actionPerformed(ActionEvent e) {
-                                        abrirFormularioConsultaFondosPersonales();
-                                    }
-                                });
-                        btnConsultarFondosHipotecarios.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                abrirFormularioConsultaFondosHipotecarios();
-                            }
-                        });
-    }
+        try {
+            BufferedImage bufferedImage = ImageIO.read(getClass().getResource("/imagenes/logo.png"));
+            Image imagen = bufferedImage.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            ImageIcon iconoRedimensionado = new ImageIcon(imagen);
+            JLabel lblLogo = new JLabel(iconoRedimensionado);
+            lblLogo.setBounds(10, 10, 43, 37);
+            getContentPane().add(lblLogo);
+            getContentPane().add(lblLogo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    private void abrirFormularioConsultaFondosPersonales() {
-        SwingUtilities.invokeLater(() -> {
-            ConsultaFondosPersonales frame = new ConsultaFondosPersonales();
-            frame.setVisible(true);
-        });
-    }
+		RoundButton btnConsultarFondosPersonales = new RoundButton("Consultar Fondos Personales");
+		btnConsultarFondosPersonales.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+		btnConsultarFondosPersonales.setBounds(208, 112, 216, 23);
+		btnConsultarFondosPersonales.setForeground(Color.decode("#003049"));
+		getContentPane().add(btnConsultarFondosPersonales);
 
-    private void abrirFormularioConsultaFondosHipotecarios() {
-        SwingUtilities.invokeLater(() -> {
-            ConsultaFondosHipotecarios frame = new ConsultaFondosHipotecarios();
-            frame.setVisible(true);
-        });
-    }
+		RoundButton btnSalir = new RoundButton("Salir");
+		btnSalir.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+		btnSalir.setBounds(529, 255, 89, 23);
+		getContentPane().add(btnSalir);
+		btnSalir.setForeground(Color.decode("#003049"));
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnConsultarFondosPersonales.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				abrirFormularioConsultaFondosPersonales();
+			}
+		});
+		btnConsultarFondosHipotecarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				abrirFormularioConsultaFondosHipotecarios();
+			}
+		});
+	}
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            ConsultaFondos frame = new ConsultaFondos();
-            frame.setVisible(true);
-        });
-    }
+	private void abrirFormularioConsultaFondosPersonales() {
+		SwingUtilities.invokeLater(() -> {
+			ConsultaFondosPersonales frame = new ConsultaFondosPersonales();
+			frame.setVisible(true);
+		});
+	}
+
+	private void abrirFormularioConsultaFondosHipotecarios() {
+		SwingUtilities.invokeLater(() -> {
+			ConsultaFondosHipotecarios frame = new ConsultaFondosHipotecarios();
+			frame.setVisible(true);
+		});
+	}
+
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(() -> {
+			ConsultaFondos frame = new ConsultaFondos();
+			frame.setVisible(true);
+		});
+	}
 }

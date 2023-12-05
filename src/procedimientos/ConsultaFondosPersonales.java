@@ -1,37 +1,65 @@
 package procedimientos;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.awt.Font;
+import java.awt.Image;
 
 public class ConsultaFondosPersonales extends JFrame {
 
     private JComboBox<String> comboBoxClientes;
-    private JButton btnConsultar;
-    private JButton btnSalir;
+    private RoundButton btnConsultar;
+    private RoundButton btnSalir;
     private JLabel lblResultado;
+    private JLabel lblFondoPersonal;
 
     public ConsultaFondosPersonales() {
         setTitle("Consulta Fondos Personales");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 356, 200);
+        setBounds(100, 100, 461, 277);
         getContentPane().setLayout(null);
+        getContentPane().setBackground(Color.decode("#D5D2CA"));
 
-        JLabel lblID_USUARIO = new JLabel("ID USUARIO:");
-        lblID_USUARIO.setBounds(20, 30, 90, 16);
+        JLabel lblID_USUARIO = new JLabel("ID Usuario:");
+        lblID_USUARIO.setBounds(20, 127, 90, 16);
         getContentPane().add(lblID_USUARIO);
+        
+        JLabel lblNewLabel = new JLabel("Banco AJEDE");
+        lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        lblNewLabel.setForeground(Color.decode("#003049"));
+        lblNewLabel.setBounds(49, 23, 89, 13);
+        getContentPane().add(lblNewLabel);
+        
+        try {
+            BufferedImage bufferedImage = ImageIO.read(getClass().getResource("/imagenes/logo.png"));
+            Image imagen = bufferedImage.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            ImageIcon iconoRedimensionado = new ImageIcon(imagen);
+            JLabel lblLogo = new JLabel(iconoRedimensionado);
+            lblLogo.setBounds(10, 10, 43, 37);
+            getContentPane().add(lblLogo);
+            getContentPane().add(lblLogo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         comboBoxClientes = new JComboBox<>();
-        comboBoxClientes.setBounds(120, 27, 200, 22);
+        comboBoxClientes.setBounds(120, 124, 200, 22);
         cargarClientesEnComboBox();
         getContentPane().add(comboBoxClientes);
 
-        btnConsultar = new JButton("Consultar Fondos Personales");
-        btnConsultar.setBounds(20, 101, 200, 25);
+        btnConsultar = new RoundButton("Consultar Fondos Personales");
+        btnConsultar.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        btnConsultar.setBounds(120, 156, 200, 25);
         btnConsultar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 consultarFondosPersonales();
@@ -39,8 +67,9 @@ public class ConsultaFondosPersonales extends JFrame {
         });
         getContentPane().add(btnConsultar);
 
-        btnSalir = new JButton("Salir");
-        btnSalir.setBounds(240, 101, 80, 25);
+        btnSalir = new RoundButton("Salir");
+        btnSalir.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+        btnSalir.setBounds(357, 205, 80, 25);
         btnSalir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 salir();
@@ -51,10 +80,19 @@ public class ConsultaFondosPersonales extends JFrame {
         lblResultado = new JLabel("");
         lblResultado.setBounds(20, 130, 400, 16);
         getContentPane().add(lblResultado);
+        
+        ImageIcon icono = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+        setIconImage(icono.getImage());
+        
+        lblFondoPersonal = new JLabel("Fondo Personal");
+        lblFondoPersonal.setForeground(new Color(0, 48, 73));
+        lblFondoPersonal.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 20));
+        lblFondoPersonal.setBounds(135, 48, 205, 47);
+        getContentPane().add(lblFondoPersonal);
     }
 
     private void cargarClientesEnComboBox() {
-        String consulta = "SELECT ID_USUARIO FROM Banco.Clientes";
+        String consulta = "SELECT ID_USUARIO FROM Clientes WHERE tipo_cuenta = 'Personal'";
         try (Connection conexion = Conexion.obtenerConexion();
              PreparedStatement pstmt = conexion.prepareStatement(consulta);
              ResultSet resultSet = pstmt.executeQuery()) {
