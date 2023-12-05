@@ -1,9 +1,8 @@
 package procedimientos;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -12,8 +11,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.awt.Font;
-import java.awt.Image;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class FormularioCreditoHipotecario extends JFrame {
     private JTextField textFieldDireccion;
@@ -139,7 +145,7 @@ public class FormularioCreditoHipotecario extends JFrame {
         });
         getContentPane().add(btnSalir);
 
-        lblCditoHipotecario = new JLabel("Cédito Hipotecario");
+        lblCditoHipotecario = new JLabel("Crédito Hipotecario");
         lblCditoHipotecario.setForeground(new Color(0, 48, 73));
         lblCditoHipotecario.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 20));
         lblCditoHipotecario.setBounds(154, 7, 205, 47);

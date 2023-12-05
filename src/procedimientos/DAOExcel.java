@@ -47,7 +47,6 @@ public class DAOExcel implements DAO<Cliente> {
 		newRow.createCell(5).setCellValue(cliente.getTipoCuenta());
 		try (FileOutputStream fos = new FileOutputStream(filePath)) {
 			workbook.write(fos);
-			System.out.println("Nueva fila agregada al archivo Excel.");
 
 		} catch (IOException e) {
 			e.printStackTrace();
