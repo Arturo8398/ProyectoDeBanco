@@ -1,11 +1,5 @@
 package procedimientos;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -14,6 +8,10 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 public class ConsultaFondos extends JFrame {
@@ -44,6 +42,9 @@ public class ConsultaFondos extends JFrame {
         lblNewLabel.setForeground(Color.decode("#003049"));
         lblNewLabel.setBounds(49, 23, 89, 13);
         getContentPane().add(lblNewLabel);
+
+		ImageIcon icono = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+        setIconImage(icono.getImage());
         
         try {
             BufferedImage bufferedImage = ImageIO.read(getClass().getResource("/imagenes/logo.png"));

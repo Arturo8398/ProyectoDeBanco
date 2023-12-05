@@ -1,8 +1,5 @@
 package procedimientos;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -14,6 +11,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class ConsultaFondosHipotecarios extends JFrame {
     private JComboBox<String> comboBoxClientes;
@@ -40,6 +45,9 @@ public class ConsultaFondosHipotecarios extends JFrame {
         lblNewLabel.setForeground(Color.decode("#003049"));
         lblNewLabel.setBounds(49, 23, 89, 13);
         getContentPane().add(lblNewLabel);
+
+        ImageIcon icono = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+        setIconImage(icono.getImage());
         
         try {
             BufferedImage bufferedImage = ImageIO.read(getClass().getResource("/imagenes/logo.png"));
